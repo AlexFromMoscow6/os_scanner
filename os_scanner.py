@@ -1,5 +1,7 @@
 import os
 import time
+import getpass
+import platform
 import psutil
 import pyautogui
 import socket
@@ -10,8 +12,8 @@ from uuid import getnode as get_mac
 
 start_time = time.monotonic()
 
-get_os_type = str(os.name)
-get_current_user = str(os.getlogin())
+get_os_name = platform.uname()
+get_current_user = getpass.getuser()
 get_os_info = str(os.uname())
 get_cpu_cores = psutil.cpu_count()
 get_disk_usage = psutil.disk_usage("/")
@@ -34,7 +36,7 @@ def uptime():
 get_screenshot = pyautogui.screenshot("Screenshot.jpg")
 
 print("*" * 5, "OS Details", "*" * 5)
-print("OS type:", get_os_type)
+print("OS info:", get_os_name)
 print("Current logged user:", get_current_user)
 print("There are", get_cpu_cores, "CPU cores in the system")
 print("Current disk usage:", get_disk_usage)
@@ -53,7 +55,7 @@ print("Time spend:", timedelta(seconds=end_time - start_time))
 
 new_file = open("results.txt", "w")
 
-new_file.write("***System scan results***\n" + "OS type: " + get_os_type + "\n" + "Current logged user: " + get_current_user + "\n" +
+new_file.write("***System scan results***\n" + "OS info: " + str(get_os_name) + "\n" + "Current logged user: " + get_current_user + "\n" +
 "Current disk usage: " + str(get_disk_usage) + "\n"+ "The total amount of RAM: " + str(get_amount_memory) + "GB" + "\n" +
 "The private IP address is: " + str(get_private_ip_address.getsockname()[0]) + "\n" + "The public IP address is: " + get_public_ip +
 "\n" + "The current MAC address is: " + str(get_mac_address) + "\n" + "The current uptime is: " + str(uptime()))
